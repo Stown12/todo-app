@@ -1,0 +1,24 @@
+<div>
+  <h2 class="font-bold text-2xl text-center mt-5">Agregar nuevo Todo</h2>
+  <form (ngSubmit)="addTodo()">
+    <div class="flex flex-col gap-5 w-1/2 mx-auto mt-5">
+      <input
+        type="text"
+        placeholder="Titulo"
+        class="p-3 rounded-md border-2 border-gray-300 focus:outline-none focus:border-teal-500"
+        name="title"
+        [(ngModel)]="formData.title"
+      />
+      <input
+        type="text"
+        placeholder="Subtitulo"
+        class="p-3 rounded-md border-2 border-gray-300 focus:outline-none focus:border-teal-500"
+        name="subTitle"
+        [(ngModel)]="formData.subTitle"
+      />
+      <button class="bg-teal-600 text-white font-bold p-3 rounded-md hover:bg-teal-700">
+        Agregar Todo
+      </button>
+    </div>
+  </form>
+</div>
