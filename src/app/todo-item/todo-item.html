@@ -18,12 +18,15 @@
       {{ todo.isCompleted ? 'Hecho' : 'falta' }}
     </p>
   </div>
-  <button class="bg-red-600 w-2/3 rounded-md text-white h-8 hover:bg-red-700" (click)="onDelete()">
+  <button
+    class="bg-red-600 w-2/3 rounded-md text-white h-8 hover:bg-red-700"
+    (click)="deleteTodo(index)"
+  >
     Eliminar
   </button>
   <button
     class="bg-blue-600 w-2/3 rounded-md text-white h-8 hover:bg-blue-700"
-    (click)="onComplete()"
+    (click)="markAsCompleted(index)"
   >
     Hecho
   </button>

@@ -1,26 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import TodoInterface from '../../interfaces/TodoInterface';
+import { TodoService } from './../services/todo-service';
+import { Component, inject } from '@angular/core';
 import { TodoItem } from '../todo-item/todo-item';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [TodoItem],
+  imports: [TodoItem, AsyncPipe],
   templateUrl: './todo-list.html',
 })
 export class TodoList {
 
+  private todoService = inject(TodoService);
 
-  @Input() todos!: TodoInterface[];
-  @Output() todoDeleted = new EventEmitter<number>();
-  @Output() todoCompleted = new EventEmitter<number>();
-
-
-  onDeleted(id: number): void {
-    this.todoDeleted.emit(id);
-  }
-
-  onCompleted(index: number): void {
-    this.todoCompleted.emit(index);
-  }
+  todos$ = this.todoService.todos$;
 
 }

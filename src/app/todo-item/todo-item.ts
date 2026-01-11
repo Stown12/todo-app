@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TodoService } from './../services/todo-service';
+import { Component, inject, Input } from '@angular/core';
 import TodoInterface from '../../interfaces/TodoInterface';
 
 @Component({
@@ -9,15 +10,17 @@ import TodoInterface from '../../interfaces/TodoInterface';
 export class TodoItem {
 
   @Input() todo!: TodoInterface;
-  @Output() delete = new EventEmitter<void>();
-  @Output() complete = new EventEmitter<void>();
+  @Input() index!: number;
 
-  onDelete(): void {
-    this.delete.emit();
+  private todoService = inject(TodoService);
+
+
+  deleteTodo(index: number): void {
+    this.todoService.deleteTodo(index);
   }
 
-  onComplete(): void {
-    this.complete.emit();
+  markAsCompleted(index: number): void {
+    this.todoService.markAsCompleted(index);
   }
 
 

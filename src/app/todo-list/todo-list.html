@@ -1,7 +1,7 @@
 <div class="w-full flex items-center justify-center mt-10 p-5">
-  @if (todos.length === 0) {
+  @if (todos$ | async; as todos) { @if(todos.length === 0){
   <p class="text-2xl font-bold mt-10">No hay tareas pendientes</p>
   } @else { @for (todo of todos; track $index) {
-  <app-todo-item [todo]="todo" (delete)="onDeleted($index)" (complete)="onCompleted($index)" />
-  } }
+  <app-todo-item [todo]="todo" [index]="$index" />
+  } } }
 </div>

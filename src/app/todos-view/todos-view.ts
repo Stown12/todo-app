@@ -1,35 +1,29 @@
-import { Component } from '@angular/core';
-import TodoInterface from '../../interfaces/TodoInterface';
+import { Component, inject } from '@angular/core';
 import { TodoForm } from "../todo-form/todo-form";
 import { TodoList } from "../todo-list/todo-list";
+import { TodoService } from '../services/todo-service';
+import { AsyncPipe } from '@angular/common';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-todos-view',
-  imports: [TodoForm, TodoList],
+  imports: [TodoForm, TodoList, AsyncPipe],
   templateUrl: './todos-view.html',
 })
 export class TodosView {
 
+  private todoService = inject(TodoService);
+  error: boolean = false;
 
-
-  todos: TodoInterface[] = [
-
-  ];
-
-  addTodo(value: TodoInterface): void {
-    if (value === undefined) return;
-    this.todos.push(value);
-  }
+  todos$ = this.todoService.todos$.pipe(catchError(error => {
+    console.log(error);
+    throw new Error(error);
+    this.error = true;
+  }));
 
   get countCompletedTodos(): number {
-    return this.todos.filter(todo => todo.isCompleted).length;
+    return this.todoService.completedTodos;
   }
 
-  deleteTodo(index: number): void {
-    this.todos.splice(index, 1);
-  }
 
-  markAsCompleted(index: number): void {
-    this.todos[index].isCompleted = true;
-  }
 }

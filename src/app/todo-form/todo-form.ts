@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output, } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import TodoInterface from '../../interfaces/TodoInterface';
 import { FormsModule } from "@angular/forms";
+import { TodoService } from '../services/todo-service';
 
 @Component({
   selector: 'app-todo-form',
@@ -15,13 +16,13 @@ export class TodoForm {
     isCompleted: false
   }
 
-  @Output() todoAdded = new EventEmitter<TodoInterface>();
+  private todoService = inject(TodoService);
 
   addTodo(): void {
     if (!this.formData.title || !this.formData.subTitle) {
       return;
     }
-    this.todoAdded.emit({ ...this.formData });
+    this.todoService.addTodo(this.formData);
     this.formData = {
       title: '',
       subTitle: '',
